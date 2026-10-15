@@ -1,0 +1,111 @@
+"use client";
+
+import Image from "next/image";
+import { useState } from "react";
+import { Download, Mail, Terminal as TerminalIcon } from "lucide-react";
+import { useApp } from "@/lib/app-context";
+import { counters, cvs, profile } from "@/data/profile";
+import { ui } from "@/data/ui";
+import { Counter } from "./Counter";
+import { TypedRoles } from "./TypedRoles";
+import { Reveal } from "./Reveal";
+
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+    </svg>
+  );
+}
+
+export function Hero() {
+  const { t, lang } = useApp();
+  const [imgOk, setImgOk] = useState(true);
+  const secondary =
+    "inline-flex items-center gap-2 rounded-lg border border-line bg-card px-4 py-2.5 text-sm font-medium transition hover:border-accent hover:text-accent-text";
+
+  return (
+    <section id="top" className="relative overflow-hidden" style={{ ["--scan-h" as string]: "640px" }}>
+      <div className="scanline" aria-hidden="true" />
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-12 sm:px-6 sm:pt-20 md:grid-cols-[auto_1fr] md:gap-14">
+        <Reveal className="mx-auto">
+          <div className="relative h-48 w-48 sm:h-60 sm:w-60">
+            <div className="ring absolute inset-0 rounded-full" aria-hidden="true" />
+            <div className="absolute inset-[5px] overflow-hidden rounded-full bg-elev">
+              {imgOk ? (
+                <Image
+                  src={profile.photo}
+                  alt={profile.name}
+                  fill
+                  priority
+                  sizes="(min-width: 640px) 240px, 192px"
+                  className="object-cover"
+                  onError={() => setImgOk(false)}
+                />
+              ) : (
+                <div className="grid h-full w-full place-items-center font-mono text-5xl font-bold text-accent-text">CB</div>
+              )}
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="text-center md:text-left">
+          <Reveal>
+            <p className="mb-2 font-mono text-sm text-accent-text">{t(ui.hero.greeting)}</p>
+            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">{profile.name}</h1>
+            <p className="mt-3 min-h-8 text-xl text-accent-text sm:text-2xl" aria-live="off">
+              <span className="mr-2 font-mono text-green-text" aria-hidden="true">
+                &gt;
+              </span>
+              <TypedRoles key={lang} roles={profile.roles[lang]} />
+            </p>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted md:mx-0">{t(profile.tagline)}</p>
+
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-green/50 bg-green/10 px-4 py-2 text-sm font-medium text-green-text">
+              <span className="h-2 w-2 rounded-full bg-green" aria-hidden="true" />
+              {t(profile.availability)}
+            </p>
+
+            <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
+              <a
+                href={cvs[0].file}
+                download
+                className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-fg transition hover:brightness-110"
+              >
+                <Download size={16} aria-hidden="true" />
+                {t(ui.hero.cv)}
+              </a>
+              <a href="#contact" className={secondary}>
+                <Mail size={16} aria-hidden="true" />
+                {t(ui.hero.contact)}
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className={secondary}>
+                <LinkedInIcon />
+                LinkedIn
+              </a>
+              <a href={profile.tryhackme} target="_blank" rel="noopener noreferrer" className={`${secondary} hover:!border-green`}>
+                <TerminalIcon size={16} aria-hidden="true" />
+                TryHackMe
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-4 pb-6 sm:px-6">
+        <Reveal>
+          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {counters.map((c) => (
+              <div key={c.label.fr} className="glass p-4 text-center">
+                <dt className="order-2 mt-1 text-xs text-muted sm:text-sm">{t(c.label)}</dt>
+                <dd className="font-mono text-3xl font-bold text-accent-text sm:text-4xl">
+                  <Counter value={c.value} />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

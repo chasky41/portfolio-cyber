@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* ---- Tokens : thème « SOC moderne » (sombre par défaut) ---- */
+:root {
+  --bg: #12294a;
+  --bg-elev: #17335a;
+  --card: rgba(255, 255, 255, 0.06);
+  --card-hover: rgba(255, 255, 255, 0.09);
+  --line: rgba(255, 255, 255, 0.14);
+  --fg: #eaf2fb;
+  --muted: #b4c6dc;
+  --accent: #29b6f6;
+  --accent-text: #29b6f6;
+  --accent-fg: #06203a;
+  --green: #88cc14;
+  --green-text: #88cc14;
+  --grid: rgba(41, 182, 246, 0.09);
+  --glow: rgba(41, 182, 246, 0.35);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f2f7fc;
+  --bg-elev: #ffffff;
+  --card: rgba(255, 255, 255, 0.72);
+  --card-hover: rgba(255, 255, 255, 0.95);
+  --line: rgba(18, 41, 74, 0.16);
+  --fg: #0f2440;
+  --muted: #3f5776;
+  --accent: #29b6f6;
+  --accent-text: #01579b;
+  --accent-fg: #06203a;
+  --green: #88cc14;
+  --green-text: #3f6212;
+  --grid: rgba(18, 41, 74, 0.07);
+  --glow: rgba(41, 182, 246, 0.3);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elev: var(--bg-elev);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-accent-fg: var(--accent-fg);
+  --color-green: var(--green);
+  --color-green-text: var(--green-text);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+html, body { overflow-x: clip; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grille de fond fine, animée très lentement */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% -10%, rgba(41, 182, 246, 0.18), transparent 60%);
+  background-size: 44px 44px, 44px 44px, 100% 100%;
+  animation: grid-drift 40s linear infinite;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+@keyframes grid-drift {
+  to { background-position: 44px 44px, 44px 44px, 0 0; }
+}
+
+/* Carte en verre dépoli */
+.glass {
+  background: var(--card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 1rem;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.glass-hover:hover {
+  background: var(--card-hover);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 8px 32px -8px var(--glow);
+}
+
+/* Anneau cyan animé autour de la photo */
+.ring {
+  background: conic-gradient(from 0deg, var(--accent), transparent 35%, var(--accent) 60%, transparent 85%, var(--accent));
+  animation: spin 6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Ligne de scan discrète (hero) */
+.scanline {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.35;
+  animation: scan 7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes scan {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 0.35; }
+  90% { opacity: 0.35; }
+  100% { transform: translateY(var(--scan-h, 600px)); opacity: 0; }
+}
+
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55ch;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bg-grid, .ring, .scanline, .caret::after { animation: none !important; }
+  .scanline { display: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
