@@ -43,14 +43,17 @@ export function Contact() {
     const form = e.currentTarget;
     const data = new FormData(form);
     if (data.get("_gotcha")) return; // piège anti-bot
-    data.set("_subject", `Portfolio · message de ${String(data.get("name") ?? "")}`);
+    // Objet en ASCII pur : FormSubmit renvoie « Server Error » avec des caractères spéciaux.
+    const who = String(data.get("name") ?? "").normalize("NFD").replace(/[^ -~]/g, "").slice(0, 60);
+    data.set("_subject", `Portfolio - message de ${who || "visiteur"}`);
     data.set("_template", "table");
     setStatus("sending");
     try {
       const res = await fetch(endpoint, {
         method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
+        // JSON (et non multipart) : FormSubmit échoue sur les caractères accentués en multipart.
+        body: JSON.stringify(Object.fromEntries([...data.entries()].filter(([k]) => k !== "_gotcha"))),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
       });
       const json: { success?: string | boolean } | null = await res.json().catch(() => null);
       const sent = res.ok && (FORMSPREE_ID ? true : json?.success === true || json?.success === "true");
