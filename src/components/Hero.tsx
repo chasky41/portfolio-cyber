@@ -39,6 +39,7 @@ export function Hero() {
                   alt={profile.name}
                   fill
                   priority
+                  unoptimized
                   sizes="(min-width: 640px) 240px, 192px"
                   className="object-cover"
                   onError={() => setImgOk(false)}

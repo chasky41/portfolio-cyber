@@ -34,7 +34,7 @@ export const profile = {
   showPhone: false,
   phone: "", // TODO : votre numéro (visible seulement si showPhone = true)
   license: { fr: "Permis B", en: "Driving licence (B)" } as L,
-  photo: "/profile.jpg",
+  photo: "/profile.jpg?v=2",
   roles: {
     fr: ["Analyste SOC", "Consultant GRC", "Pentest & audit", "Gestion des risques"],
     en: ["SOC Analyst", "GRC Consultant", "Pentest & audit", "Risk management"],

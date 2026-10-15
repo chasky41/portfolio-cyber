@@ -154,7 +154,7 @@ export default function NetworkBackground() {
       }
       nodeGeo.attributes.color.needsUpdate = true;
       lineMat.blending = pal.blend;
-      lineMat.opacity = t === "dark" ? 1 : 0.55;
+      lineMat.opacity = t === "dark" ? 1 : 0.22;
       nodeMat.blending = pal.blend;
       nodeMat.needsUpdate = true;
       lineMat.needsUpdate = true;
