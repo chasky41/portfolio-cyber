@@ -25,6 +25,7 @@ import {
 import { ui } from "@/data/ui";
 import { Badge, Section } from "./Section";
 import { Reveal } from "./Reveal";
+import { Tilt } from "./Tilt";
 
 const icons = { "shield-check": ShieldCheck, scale: Scale, radar: Radar, bug: Bug, "git-branch": GitBranch, factory: Factory };
 
@@ -77,7 +78,7 @@ export function Expertise() {
           const Icon = icons[d.icon];
           return (
             <Reveal key={d.id} delay={(i % 3) * 0.07} className="h-full">
-              <article className="glass glass-hover flex h-full flex-col p-5">
+              <Tilt className="h-full"><article className="glass glass-hover flex h-full flex-col p-5">
                 <div className="mb-3 flex items-start justify-between gap-3">
                   <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent/15 text-accent-text">
                     <Icon size={20} aria-hidden="true" />
@@ -105,7 +106,7 @@ export function Expertise() {
                     </div>
                   </>
                 )}
-              </article>
+              </article></Tilt>
             </Reveal>
           );
         })}
@@ -162,7 +163,7 @@ export function CaseStudies() {
       <div className="grid gap-5 lg:grid-cols-3">
         {caseStudies.map((c, i) => (
           <Reveal key={c.title.fr} delay={i * 0.07} className="h-full">
-            <article className="glass glass-hover h-full p-5">
+            <Tilt className="h-full"><article className="glass glass-hover h-full p-5">
               <h3 className="mb-4 text-lg font-semibold">{t(c.title)}</h3>
               <dl className="space-y-3 text-sm">
                 {(
@@ -178,7 +179,7 @@ export function CaseStudies() {
                   </div>
                 ))}
               </dl>
-            </article>
+            </article></Tilt>
           </Reveal>
         ))}
       </div>
@@ -194,7 +195,7 @@ export function Projects() {
       <div className="grid gap-5 md:grid-cols-2">
         {projects.map((p, i) => (
           <Reveal key={p.title.fr} delay={(i % 2) * 0.07} className="h-full">
-            <article className="glass glass-hover flex h-full flex-col p-5">
+            <Tilt className="h-full"><article className="glass glass-hover flex h-full flex-col p-5">
               <p className="font-mono text-xs text-accent-text">{p.period}</p>
               <h3 className="mt-1 text-lg font-semibold">{t(p.title)}</h3>
               <p className="mt-2 text-sm text-muted">{t(p.description)}</p>
@@ -215,7 +216,7 @@ export function Projects() {
                   {t(ui.labels.code)} <ExternalLink size={14} aria-hidden="true" />
                 </a>
               )}
-            </article>
+            </article></Tilt>
           </Reveal>
         ))}
       </div>

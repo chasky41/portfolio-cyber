@@ -570,3 +570,14 @@ export const securityPage = {
     },
   ],
 };
+
+/**
+ * Stats TryHackMe affichées dans le dashboard du hero.
+ * TODO : renseignez vos vraies valeurs (copiez-les depuis votre profil). Les champs vides ne s'affichent pas.
+ */
+export const thmStats: { rank: string; rooms: string; badges: string; streak: string } = {
+  rank: "",
+  rooms: "",
+  badges: "",
+  streak: "",
+};

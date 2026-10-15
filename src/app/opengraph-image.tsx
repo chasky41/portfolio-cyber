@@ -15,14 +15,14 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: 80,
-          background: "linear-gradient(135deg, #12294a 0%, #0b1a30 100%)",
+          background: "linear-gradient(135deg, #0a0f1d 0%, #0f1830 100%)",
           color: "#eaf2fb",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, color: "#88cc14" }}>{"> stage cybersécurité · 6 mois · dès fin mars 2027"}</div>
+        <div style={{ display: "flex", fontSize: 28, color: "#00ff66" }}>{"> stage cybersécurité · 6 mois · dès fin mars 2027"}</div>
         <div style={{ display: "flex", fontSize: 80, fontWeight: 800, marginTop: 24 }}>Charaf-Eddine BERHILI</div>
-        <div style={{ display: "flex", fontSize: 38, color: "#29b6f6", marginTop: 20 }}>
+        <div style={{ display: "flex", fontSize: 38, color: "#00f3ff", marginTop: 20 }}>
           Analyste SOC · Consultant GRC · Pentest & audit · Gestion des risques
         </div>
         <div style={{ display: "flex", fontSize: 28, color: "#b4c6dc", marginTop: 36 }}>

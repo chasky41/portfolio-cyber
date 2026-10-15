@@ -33,10 +33,10 @@ export function Navbar({ home = true }: { home?: boolean }) {
         </a>
 
         {home && (
-          <ul className="ml-4 hidden items-center gap-1 xl:flex">
+          <ul className="ml-4 hidden items-center gap-1 2xl:flex">
             {links.map(([id, label]) => (
               <li key={id}>
-                <a href={`#${id}`} className="rounded-md px-2.5 py-2 text-sm text-muted transition hover:text-accent-text">
+                <a href={`#${id}`} className="whitespace-nowrap rounded-md px-2.5 py-2 text-sm text-muted transition hover:text-accent-text">
                   {t(label)}
                 </a>
               </li>
@@ -61,7 +61,7 @@ export function Navbar({ home = true }: { home?: boolean }) {
           <a
             href={cvs[0].file}
             download
-            className="hidden items-center gap-2 rounded-lg bg-accent px-3 py-2 text-sm font-semibold text-accent-fg transition hover:brightness-110 md:inline-flex"
+            className="hidden items-center gap-2 whitespace-nowrap rounded-lg bg-accent px-3 py-2 text-sm font-semibold text-accent-fg transition hover:brightness-110 md:inline-flex"
           >
             <Download size={16} aria-hidden="true" />
             {t(ui.cvBtn)}
@@ -69,7 +69,7 @@ export function Navbar({ home = true }: { home?: boolean }) {
           {home && (
             <button
               type="button"
-              className={`${btn} xl:hidden`}
+              className={`${btn} 2xl:hidden`}
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={t(ui.menu)}
@@ -82,7 +82,7 @@ export function Navbar({ home = true }: { home?: boolean }) {
       </nav>
 
       {home && open && (
-        <div id="mobile-menu" className="border-t border-line bg-bg px-4 pb-4 pt-2 xl:hidden">
+        <div id="mobile-menu" className="border-t border-line bg-bg px-4 pb-4 pt-2 2xl:hidden">
           <ul className="grid grid-cols-2 gap-1">
             {links.map(([id, label]) => (
               <li key={id}>

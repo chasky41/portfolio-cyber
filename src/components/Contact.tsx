@@ -11,12 +11,19 @@ import { Reveal } from "./Reveal";
 // ID Formspree facultatif (NEXT_PUBLIC_FORMSPREE_ID). Sans lui : repli sur mailto.
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
 
+function toHex(v: string) {
+  return Array.from(new TextEncoder().encode(v.slice(0, 120)))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join(" ");
+}
+
 const field =
   "w-full rounded-lg border border-line bg-bg/60 px-3 py-2.5 text-sm text-fg outline-none transition focus:border-accent";
 
 export function Contact() {
   const { t } = useApp();
   const [copied, setCopied] = useState(false);
+  const [msg, setMsg] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
 
   async function copy() {
@@ -114,7 +121,13 @@ export function Contact() {
               <label htmlFor="c-msg" className="mb-1 block text-sm font-medium">
                 {t(ui.contact.message)}
               </label>
-              <textarea id="c-msg" name="message" rows={5} required className={field} />
+              <textarea id="c-msg" name="message" rows={5} required className={field} value={msg} onChange={(e) => setMsg(e.target.value)} />
+              <div className="mt-2 rounded-lg border border-green/30 bg-bg/60 p-3" aria-hidden="true">
+                <p className="mb-1 font-mono text-[10px] uppercase tracking-widest text-green-text">{t(ui.contact.cipher)}</p>
+                <p className="max-h-16 overflow-hidden break-all font-mono text-[11px] leading-snug text-green-text/80">
+                  {msg ? toHex(msg) : "00 00 00 00 …"}
+                </p>
+              </div>
             </div>
             <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
             <button

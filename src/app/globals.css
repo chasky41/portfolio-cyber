@@ -2,20 +2,21 @@
 
 /* ---- Tokens : thème « SOC moderne » (sombre par défaut) ---- */
 :root {
-  --bg: #12294a;
-  --bg-elev: #17335a;
-  --card: rgba(255, 255, 255, 0.06);
-  --card-hover: rgba(255, 255, 255, 0.09);
-  --line: rgba(255, 255, 255, 0.14);
-  --fg: #eaf2fb;
-  --muted: #b4c6dc;
-  --accent: #29b6f6;
-  --accent-text: #29b6f6;
-  --accent-fg: #06203a;
-  --green: #88cc14;
-  --green-text: #88cc14;
-  --grid: rgba(41, 182, 246, 0.09);
-  --glow: rgba(41, 182, 246, 0.35);
+  --bg: #0a0f1d;
+  --bg-elev: #0f1830;
+  --card: rgba(13, 24, 48, 0.58);
+  --card-hover: rgba(16, 32, 64, 0.72);
+  --line: rgba(0, 243, 255, 0.2);
+  --fg: #e6f1ff;
+  --muted: #9fb4d3;
+  --accent: #00f3ff;
+  --accent-text: #00f3ff;
+  --accent-fg: #021018;
+  --blue: #0066ff;
+  --green: #00ff66;
+  --green-text: #00ff66;
+  --grid: rgba(0, 243, 255, 0.07);
+  --glow: rgba(0, 243, 255, 0.45);
   color-scheme: dark;
 }
 
@@ -31,7 +32,8 @@
   --accent-text: #01579b;
   --accent-fg: #06203a;
   --green: #88cc14;
-  --green-text: #3f6212;
+  --green-text: #166534;
+  --blue: #0b5cad;
   --grid: rgba(18, 41, 74, 0.07);
   --glow: rgba(41, 182, 246, 0.3);
   color-scheme: light;
@@ -67,23 +69,62 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Grille de fond fine, animée très lentement */
+/* Fond statique (repli sans WebGL) : dégradés + grille holographique */
 .bg-grid {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(0, 102, 255, 0.28), transparent 60%),
+    radial-gradient(ellipse at 90% 60%, rgba(0, 243, 255, 0.1), transparent 55%),
+    var(--bg);
+}
+.bg-grid::before {
+  content: "";
+  position: absolute;
+  left: -50%; right: -50%; bottom: 0;
+  height: 55%;
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-    radial-gradient(ellipse at 50% -10%, rgba(41, 182, 246, 0.18), transparent 60%);
-  background-size: 44px 44px, 44px 44px, 100% 100%;
-  animation: grid-drift 40s linear infinite;
-  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+  transform: perspective(520px) rotateX(62deg);
+  transform-origin: 50% 100%;
+  animation: grid-drift 6s linear infinite;
+  mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+}
+.bg-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(0, 243, 255, 0.025) 3px, rgba(0, 243, 255, 0.025) 4px);
 }
 @keyframes grid-drift {
-  to { background-position: 44px 44px, 44px 44px, 0 0; }
+  to { background-position: 0 56px, 56px 0; }
 }
+
+h1, h2, h3 { font-family: var(--font-space), var(--font-sans); }
+.neon { text-shadow: 0 0 22px var(--glow); }
+
+/* Ligne de circuit lumineuse sous les titres de section */
+.circuit {
+  height: 14px;
+  background:
+    linear-gradient(90deg, var(--accent), transparent 70%) left 0 top 6px / 100% 1px no-repeat,
+    radial-gradient(circle, var(--accent) 2px, transparent 3px) left 0 top 3px / 8px 8px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) left 28px top 6px / 1px 8px no-repeat;
+  opacity: 0.7;
+}
+
+/* Voyant d'état */
+.led {
+  width: 9px; height: 9px; border-radius: 9999px;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green), 0 0 2px var(--green);
+  animation: led 1.6s ease-in-out infinite;
+}
+@keyframes led { 50% { opacity: 0.35; box-shadow: 0 0 3px var(--green); } }
 
 /* Carte en verre dépoli */
 .glass {
@@ -94,6 +135,32 @@ body {
   border-radius: 1rem;
   transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
+.glass { position: relative; }
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.75;
+  background:
+    linear-gradient(var(--accent), var(--accent)) top left / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top left / 2px 16px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top right / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) top right / 2px 16px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom left / 2px 16px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 16px 2px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom right / 2px 16px no-repeat;
+}
+.tilt { transform-style: preserve-3d; transition: transform 0.18s ease-out; will-change: transform; position: relative; border-radius: 1rem; }
+.tilt::after {
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  opacity: 0; transition: opacity 0.2s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 243, 255, 0.14), transparent 60%);
+}
+.tilt:hover::after { opacity: 1; }
 .glass-hover:hover {
   background: var(--card-hover);
   border-color: var(--accent);
@@ -144,7 +211,8 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .bg-grid, .ring, .scanline, .caret::after { animation: none !important; }
+  .bg-grid, .bg-grid::before, .ring, .scanline, .led, .caret::after { animation: none !important; }
+  .tilt { transform: none !important; }
   .scanline { display: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
 }

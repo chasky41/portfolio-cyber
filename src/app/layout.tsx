@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
+import { NetworkBackdrop } from "@/components/NetworkBackdrop";
 import { AppProvider } from "@/lib/app-context";
 import { profile, site } from "@/data/profile";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
+const space = Space_Grotesk({ variable: "--font-space", subsets: ["latin"], display: "swap" });
 const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], display: "swap" });
 
 const title = "Charaf-Eddine BERHILI · Portfolio cybersécurité (GRC, SOC, pentest)";
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#12294a",
+  themeColor: "#0a0f1d",
   width: "device-width",
   initialScale: 1,
 };
@@ -60,7 +62,7 @@ const themeBootstrap = `try{var t=localStorage.getItem("theme");if(t==="light"||
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
-    <html lang="fr" data-theme="dark" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable}`}>
+    <html lang="fr" data-theme="dark" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable} ${space.variable}`}>
       <head>
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
         <script
@@ -71,7 +73,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className="min-h-screen antialiased">
         <div className="bg-grid" aria-hidden="true" />
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <NetworkBackdrop />
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

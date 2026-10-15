@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { Download, Mail, Terminal as TerminalIcon } from "lucide-react";
 import { useApp } from "@/lib/app-context";
-import { counters, cvs, profile } from "@/data/profile";
+import { certifications, counters, cvs, profile, thmStats } from "@/data/profile";
+import { Tilt } from "./Tilt";
 import { ui } from "@/data/ui";
 import { Counter } from "./Counter";
 import { TypedRoles } from "./TypedRoles";
@@ -29,7 +30,7 @@ export function Hero() {
       <div className="scanline" aria-hidden="true" />
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-12 sm:px-6 sm:pt-20 md:grid-cols-[auto_1fr] md:gap-14">
         <Reveal className="mx-auto">
-          <div className="relative h-48 w-48 sm:h-60 sm:w-60">
+          <Tilt max={16}><div className="relative h-48 w-48 sm:h-60 sm:w-60" style={{ transform: "translateZ(40px)" }}>
             <div className="ring absolute inset-0 rounded-full" aria-hidden="true" />
             <div className="absolute inset-[5px] overflow-hidden rounded-full bg-elev">
               {imgOk ? (
@@ -46,13 +47,17 @@ export function Hero() {
                 <div className="grid h-full w-full place-items-center font-mono text-5xl font-bold text-accent-text">CB</div>
               )}
             </div>
-          </div>
+          </div></Tilt>
         </Reveal>
 
         <div className="text-center md:text-left">
           <Reveal>
+            <p className="mb-3 inline-flex items-center gap-2 rounded-md border border-green/40 bg-green/10 px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-green-text">
+              <span className="led" aria-hidden="true" />
+              {t(ui.hero.status)}
+            </p>
             <p className="mb-2 font-mono text-sm text-accent-text">{t(ui.hero.greeting)}</p>
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">{profile.name}</h1>
+            <h1 className="neon text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">{profile.name}</h1>
             <p className="mt-3 min-h-8 text-xl text-accent-text sm:text-2xl" aria-live="off">
               <span className="mr-2 font-mono text-green-text" aria-hidden="true">
                 &gt;
@@ -94,16 +99,45 @@ export function Hero() {
 
       <div className="mx-auto max-w-6xl px-4 pb-6 sm:px-6">
         <Reveal>
-          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {counters.map((c) => (
-              <div key={c.label.fr} className="glass p-4 text-center">
-                <dt className="order-2 mt-1 text-xs text-muted sm:text-sm">{t(c.label)}</dt>
-                <dd className="font-mono text-3xl font-bold text-accent-text sm:text-4xl">
-                  <Counter value={c.value} />
+          <div className="glass p-4 sm:p-5">
+            <p className="mb-3 font-mono text-xs uppercase tracking-widest text-accent-text">{t(ui.hero.dashboard)}</p>
+            <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {counters.map((c) => (
+                <div key={c.label.fr} className="rounded-lg border border-line bg-bg/40 p-3 text-center">
+                  <dd className="font-mono text-3xl font-bold text-accent-text sm:text-4xl">
+                    <Counter value={c.value} />
+                  </dd>
+                  <dt className="mt-1 text-xs text-muted sm:text-sm">{t(c.label)}</dt>
+                </div>
+              ))}
+              <div className="rounded-lg border border-line bg-bg/40 p-3 text-center">
+                <dd className="font-mono text-3xl font-bold text-green-text sm:text-4xl">
+                  <Counter value={certifications.filter((c) => c.status === "done").length} />
+                  <span className="text-lg text-muted"> +{certifications.filter((c) => c.status === "ongoing").length}</span>
                 </dd>
+                <dt className="mt-1 text-xs text-muted sm:text-sm">{t(ui.hero.certs)}</dt>
               </div>
-            ))}
-          </dl>
+              <div className="rounded-lg border border-line bg-bg/40 p-3 text-center sm:col-span-1">
+                <dd className="font-mono text-xl font-bold text-accent-text sm:text-2xl">M2 OPSIE</dd>
+                <dt className="mt-1 text-xs text-muted sm:text-sm">Lyon 2 · SecNumÉdu</dt>
+              </div>
+              {(
+                [
+                  ["THM Rank", thmStats.rank],
+                  [t(ui.hero.rooms), thmStats.rooms],
+                  ["THM Badges", thmStats.badges],
+                  ["THM Streak", thmStats.streak],
+                ] as const
+              )
+                .filter(([, v]) => v)
+                .map(([k, v]) => (
+                  <div key={k} className="rounded-lg border border-green/40 bg-green/5 p-3 text-center">
+                    <dd className="font-mono text-2xl font-bold text-green-text">{v}</dd>
+                    <dt className="mt-1 text-xs text-muted sm:text-sm">{k}</dt>
+                  </div>
+                ))}
+            </dl>
+          </div>
         </Reveal>
       </div>
     </section>

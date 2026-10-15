@@ -18,6 +18,7 @@ export function Section({
         <h2 id={`${id}-title`} className="mb-8 text-2xl font-bold tracking-tight sm:text-3xl">
           {title}
         </h2>
+        <div className="circuit -mt-5 mb-8 w-40" aria-hidden="true" />
       </Reveal>
       {children}
     </section>

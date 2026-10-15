@@ -107,6 +107,9 @@ export function run(raw: string, lang: Lang): TLine[] | "clear" {
         l(fr ? "→ Écrivez-moi : " + profile.email : "→ Email me: " + profile.email, "ok", `mailto:${profile.email}`),
       ];
     default:
+      if (cmd === "sudo" || cmd.startsWith("sudo ")) {
+        return [l("visitor is not in the sudoers file. This incident will be reported.", "err"), l(fr ? "Essayez « sudo hire-me »." : 'Try "sudo hire-me".', "dim")];
+      }
       return [l(`zsh: ${fr ? "commande introuvable" : "command not found"}: ${raw.trim()}`, "err"), l(fr ? "Tapez « help »." : 'Type "help".', "dim")];
   }
 }

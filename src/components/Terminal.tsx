@@ -11,8 +11,8 @@ type Entry = { cmd: string; out: TLine[] };
 
 const toneClass: Record<NonNullable<TLine["tone"]>, string> = {
   dim: "text-[#8da4c0]",
-  ok: "text-[#88cc14]",
-  accent: "text-[#29b6f6]",
+  ok: "text-[#00ff66]",
+  accent: "text-[#00f3ff]",
   err: "text-[#ff8a80]",
 };
 
@@ -71,9 +71,9 @@ export function Terminal() {
 
   const prompt = (
     <span className="select-none">
-      <span className="text-[#88cc14]">visitor@cb</span>
+      <span className="text-[#00ff66]">visitor@cb</span>
       <span className="text-[#8da4c0]">:</span>
-      <span className="text-[#29b6f6]">~</span>
+      <span className="text-[#00f3ff]">~</span>
       <span className="text-[#8da4c0]"> % </span>
     </span>
   );
@@ -81,8 +81,8 @@ export function Terminal() {
   return (
     <Section id="terminal" title={t(ui.sections.terminal)} eyebrow="~/zsh">
       <Reveal>
-        <div className="overflow-hidden rounded-xl border border-line bg-[#0b1a30] shadow-xl">
-          <div className="flex items-center gap-2 border-b border-white/10 bg-[#0f2240] px-4 py-2.5">
+        <div className="overflow-hidden rounded-xl border border-line bg-[#070d1a] shadow-[0_0_40px_-10px_rgba(0,243,255,0.35)]">
+          <div className="flex items-center gap-2 border-b border-white/10 bg-[#0b1630] px-4 py-2.5">
             <span className="h-3 w-3 rounded-full bg-[#ff5f56]" aria-hidden="true" />
             <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" aria-hidden="true" />
             <span className="h-3 w-3 rounded-full bg-[#27c93f]" aria-hidden="true" />
@@ -98,7 +98,7 @@ export function Terminal() {
           >
             <p className="text-[#8da4c0]">
               {lang === "fr" ? "Bienvenue. Tapez " : "Welcome. Type "}
-              <span className="text-[#88cc14]">help</span>
+              <span className="text-[#00ff66]">help</span>
               {lang === "fr" ? " pour commencer." : " to get started."}
             </p>
             {entries.map((en, i) => (
@@ -143,11 +143,11 @@ export function Terminal() {
                 autoCapitalize="off"
                 autoCorrect="off"
                 spellCheck={false}
-                className="min-w-0 flex-1 bg-transparent text-[#e6eef8] caret-[#29b6f6] outline-none"
+                className="min-w-0 flex-1 bg-transparent text-[#e6eef8] caret-[#00f3ff] outline-none"
               />
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 border-t border-white/10 bg-[#0f2240] px-3 py-2">
+          <div className="flex flex-wrap gap-2 border-t border-white/10 bg-[#0b1630] px-3 py-2">
             {COMMANDS.filter((c) => c !== "sudo hire-me").map((c) => (
               <button
                 key={c}
@@ -158,7 +158,7 @@ export function Terminal() {
                   else setEntries((e) => [...e, { cmd: c, out: res }]);
                   setHist((h) => [...h, c]);
                 }}
-                className="rounded-md border border-white/15 px-2 py-1 font-mono text-xs text-[#9fd8f7] hover:border-[#29b6f6]"
+                className="rounded-md border border-white/15 px-2 py-1 font-mono text-xs text-[#9fd8f7] hover:border-[#00f3ff]"
               >
                 {c}
               </button>
