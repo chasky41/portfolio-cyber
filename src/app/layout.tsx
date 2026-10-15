@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
+import { Loader } from "@/components/Loader";
 import { NetworkBackdrop } from "@/components/NetworkBackdrop";
 import { AppProvider } from "@/lib/app-context";
 import { profile, site } from "@/data/profile";
@@ -72,6 +73,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body className="min-h-screen antialiased">
+        <Loader />
         <div className="bg-grid" aria-hidden="true" />
         <AppProvider>
           <NetworkBackdrop />

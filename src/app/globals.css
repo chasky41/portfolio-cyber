@@ -216,3 +216,40 @@ h1, h2, h3 { font-family: var(--font-space), var(--font-sans); }
   .scanline { display: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
 }
+
+/* ---- Loader de démarrage ---- */
+.loader {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center;
+  background: radial-gradient(ellipse at 50% 40%, #12214a 0%, #0a0f1d 70%);
+  animation: loader-out 0.5s ease 2.1s forwards;
+}
+@keyframes loader-out { to { opacity: 0; visibility: hidden; } }
+.loader-inner { width: min(88vw, 380px); text-align: center; }
+.loader-ring {
+  position: relative; width: 96px; height: 96px; margin: 0 auto 20px;
+  display: grid; place-items: center; border-radius: 9999px;
+  font-family: var(--font-jetbrains), monospace; font-weight: 700; font-size: 30px; color: #00f3ff;
+  text-shadow: 0 0 16px rgba(0, 243, 255, 0.7);
+}
+.loader-ring::before {
+  content: ""; position: absolute; inset: 0; border-radius: 9999px;
+  background: conic-gradient(from 0deg, #00f3ff, transparent 40%, #0066ff 70%, transparent 90%, #00f3ff);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  animation: spin 1.4s linear infinite;
+}
+.loader-title { font-family: var(--font-space), sans-serif; font-weight: 700; letter-spacing: 0.18em; font-size: 14px; color: #e6f1ff; margin-bottom: 16px; }
+.loader-lines { list-style: none; padding: 0; margin: 0 0 18px; text-align: left; font-family: var(--font-jetbrains), monospace; font-size: 12px; color: #9fb4d3; }
+.loader-lines li { opacity: 0; transform: translateX(-6px); animation: line-in 0.3s ease forwards; padding: 2px 0; }
+.loader-lines .ok { color: #00ff66; }
+@keyframes line-in { to { opacity: 1; transform: none; } }
+.loader-bar { height: 3px; border-radius: 3px; background: rgba(0, 243, 255, 0.15); overflow: hidden; }
+.loader-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #0066ff, #00f3ff); box-shadow: 0 0 12px #00f3ff; animation: bar 1.9s cubic-bezier(0.3, 0.7, 0.3, 1) 0.1s forwards; }
+@keyframes bar { to { width: 100%; } }
+@media (prefers-reduced-motion: reduce) {
+  .loader { animation-duration: 0.2s; animation-delay: 0.3s; }
+  .loader-lines li { animation-duration: 0.01ms; animation-delay: 0s !important; }
+  .loader-ring::before, .loader-bar span { animation: none; }
+  .loader-bar span { width: 100%; }
+}

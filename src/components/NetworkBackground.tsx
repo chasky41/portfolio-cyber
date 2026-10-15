@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useApp } from "@/lib/app-context";
+import { readableColor, sceneTools } from "@/data/tools";
 
 type Api = { setTheme: (t: "dark" | "light") => void };
 
@@ -83,6 +84,49 @@ export default function NetworkBackground() {
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     lines.frustumCulled = false;
     group.add(lines);
+
+
+    // Icônes d'outils flottant dans le réseau (Kali, Burp, VirtualBox, ANSSI…)
+    const iconSprites: { s: THREE.Sprite; tex: THREE.CanvasTexture; v: THREE.Vector3; phase: number }[] = [];
+    const iconTools = mobile ? sceneTools.slice(0, 10) : sceneTools;
+    iconTools.forEach((tool, idx) => {
+      const c = document.createElement("canvas");
+      c.width = c.height = 192;
+      const x = c.getContext("2d");
+      if (!x) return;
+      x.fillStyle = "rgba(10,18,38,0.88)";
+      x.strokeStyle = "rgba(0,243,255,0.85)";
+      x.lineWidth = 4;
+      x.beginPath();
+      x.roundRect(8, 8, 176, 176, 28);
+      x.fill();
+      x.stroke();
+      if (tool.path) {
+        x.save();
+        x.translate(46, 46);
+        x.scale(100 / 24, 100 / 24);
+        x.fillStyle = readableColor(tool.hex);
+        x.fill(new Path2D(tool.path));
+        x.restore();
+      } else {
+        const label = tool.mono ?? tool.label;
+        x.fillStyle = "#00f3ff";
+        x.textAlign = "center";
+        x.textBaseline = "middle";
+        x.font = `700 ${label.length > 5 ? 34 : label.length > 4 ? 42 : 52}px monospace`;
+        x.fillText(label, 96, 96);
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.92, depthWrite: false });
+      const sp = new THREE.Sprite(mat);
+      const a = (idx / iconTools.length) * Math.PI * 2 + Math.random() * 0.6;
+      const rad = 20 + Math.random() * 14;
+      sp.position.set(Math.cos(a) * rad * 1.5, Math.sin(a) * rad * 0.8, -6 + Math.random() * 16);
+      sp.scale.set(mobile ? 3.4 : 4.4, mobile ? 3.4 : 4.4, 1);
+      group.add(sp);
+      iconSprites.push({ s: sp, tex, v: new THREE.Vector3((Math.random() - 0.5) * 0.008, (Math.random() - 0.5) * 0.008, 0), phase: Math.random() * 6 });
+    });
 
     // Polyèdre filaire en arrière-plan (« core » du SOC)
     const coreGeo = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(10, 1));
@@ -180,6 +224,12 @@ export default function NetworkBackground() {
       const p = Math.min(window.scrollY / scrollMax, 1);
       camera.position.z += (42 - p * 10 - camera.position.z) * 0.05;
       camera.position.y += (-p * 8 - camera.position.y) * 0.05;
+      for (const ic of iconSprites) {
+        ic.s.position.x += ic.v.x;
+        ic.s.position.y += ic.v.y + Math.sin(t * 0.0006 + ic.phase) * 0.004;
+        if (Math.abs(ic.s.position.x) > 44) ic.v.x *= -1;
+        if (Math.abs(ic.s.position.y) > 24) ic.v.y *= -1;
+      }
       core.rotation.y = t * 0.00008;
       core.rotation.x = t * 0.00005;
       core2.rotation.y = -t * 0.00012;
@@ -208,7 +258,8 @@ export default function NetworkBackground() {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", onResize);
       api.current = null;
-      nodeGeo.dispose(); nodeMat.dispose(); sprite.dispose(); lineGeo.dispose(); lineMat.dispose();
+      nodeGeo.dispose(); nodeMat.dispose(); sprite.dispose();
+      for (const ic of iconSprites) { ic.tex.dispose(); ic.s.material.dispose(); } lineGeo.dispose(); lineMat.dispose();
       coreGeo.dispose(); coreMat.dispose(); coreGeo2.dispose();
       (core2.material as THREE.Material).dispose();
       renderer.dispose();

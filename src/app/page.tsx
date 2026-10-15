@@ -14,6 +14,7 @@ import {
   Projects,
   SkillsMatrix,
 } from "@/components/Sections";
+import { ToolsWall } from "@/components/ToolsWall";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { SkipLink } from "@/components/SkipLink";
@@ -32,6 +33,7 @@ export default function Home() {
         <Experience />
         <CaseStudies />
         <Projects />
+        <ToolsWall />
         <Frameworks />
         <SkillsMatrix />
         <Certifications />
