@@ -19,7 +19,7 @@ Téléphone : renseignez `phone` et passez `showPhone` à `true`.
 ## Remplacer la photo et les CV
 
 - Photo : remplacez `public/profile.jpg` (carré, 600×600 conseillé).
-- CV : remplacez les PDF de `public/cv/` en gardant les noms `cv-cyber.pdf`, `cv-grc.pdf`, `cv-soc.pdf`.
+- CV : remplacez `public/cv/cv-pentest.pdf` (même nom) puis changez `?v=3` en `?v=4` dans `src/data/profile.ts` pour forcer le rechargement. Pour ajouter un CV, ajoutez une ligne dans `cvs`.
   Attention : ces PDF sont publics, retirez-en les informations que vous ne voulez pas exposer (téléphone, adresse).
 
 ## Formulaire de contact

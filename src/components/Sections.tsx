@@ -399,7 +399,7 @@ export function CvSection() {
   return (
     <Section id="cv" title={t(ui.sections.cv)} eyebrow="cv/">
       <Reveal>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-[repeat(auto-fit,minmax(16rem,22rem))]">
           {cvs.map((c) => (
             <a
               key={c.id}
