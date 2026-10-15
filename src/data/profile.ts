@@ -18,7 +18,7 @@ export const levelLabels: Record<Level, L> = {
 };
 
 export const site = {
-  url: "https://portfolio-cyber.vercel.app", // TODO : remplacer par votre domaine final
+  url: "https://portfolio-cyber-rosy.vercel.app", // TODO : remplacer par votre domaine final
   name: "Charaf-Eddine BERHILI",
   initials: "CB",
 };

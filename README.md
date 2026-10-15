@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio cybersécurité · Charaf-Eddine BERHILI
 
-## Getting Started
+Next.js (App Router) · TypeScript · Tailwind CSS · Framer Motion. Bilingue FR/EN, thème sombre/clair, mode recruteur, terminal interactif.
 
-First, run the development server:
+## Lancer en local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Modifier le contenu
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Tout le contenu est dans **`src/data/profile.ts`** (champs `{ fr, en }`). Les libellés d'interface sont dans `src/data/ui.ts`.
+Les `TODO` dans `profile.ts` sont à compléter (téléphone, liens GitHub des projets, cyber industrielle). Un lien projet vide n'est pas affiché.
+Téléphone : renseignez `phone` et passez `showPhone` à `true`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Remplacer la photo et les CV
 
-## Learn More
+- Photo : remplacez `public/profile.jpg` (carré, 600×600 conseillé).
+- CV : remplacez les PDF de `public/cv/` en gardant les noms `cv-cyber.pdf`, `cv-grc.pdf`, `cv-soc.pdf`.
+  Attention : ces PDF sont publics, retirez-en les informations que vous ne voulez pas exposer (téléphone, adresse).
 
-To learn more about Next.js, take a look at the following resources:
+## Formulaire de contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Créez un formulaire sur formspree.io, puis définissez `NEXT_PUBLIC_FORMSPREE_ID` (Vercel > Settings > Environment Variables, puis redéployez). Sans cette variable, le formulaire ouvre un `mailto:`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Déployer
 
-## Deploy on Vercel
+```bash
+vercel --prod
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Ajouter un nom de domaine
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Vercel > Project > Settings > Domains > Add, puis suivez les DNS indiqués chez votre registrar.
+2. Mettez à jour `site.url` dans `src/data/profile.ts` et `Canonical` / `Policy` dans `public/.well-known/security.txt`.
+3. Renouvelez la date `Expires` de `security.txt` au moins une fois par an.
+4. Redéployez.
+
+## Sécurité
+
+La CSP (nonce par requête, `strict-dynamic`) est définie dans `src/proxy.ts`, les autres en-têtes dans `next.config.ts`. Si vous ajoutez une origine externe (script, image, API), autorisez-la explicitement dans la CSP. Vérifiez avec `npm audit --omit=dev` avant chaque mise en ligne et testez sur securityheaders.com.
