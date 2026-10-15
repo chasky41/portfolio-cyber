@@ -511,8 +511,7 @@ export const education: { title: L; school: string; period: string; note?: L }[]
 // Remplacez le PDF dans public/cv/ en gardant le nom, et incrémentez ?v= pour forcer le rechargement chez les visiteurs.
 // Pour ajouter un autre CV (ex. GRC, SOC), ajoutez une ligne ici et déposez le PDF dans public/cv/.
 export const cvs: { label: L; file: string; id: string }[] = [
-  { id: "cyber", label: { fr: "CV Cybersécurité (général)", en: "Cybersecurity CV (general)" }, file: "/cv/cv-cyber.pdf?v=1" },
-  { id: "pentest", label: { fr: "CV Pentest", en: "Pentest CV" }, file: "/cv/cv-pentest.pdf?v=3" },
+  { id: "cyber", label: { fr: "CV Cybersécurité (Pentest, SOC, GRC)", en: "Cybersecurity CV (Pentest, SOC, GRC)" }, file: "/cv/cv-cyber.pdf?v=2" },
 ];
 
 /* ------------------------------------------------------------------ */
