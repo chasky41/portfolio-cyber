@@ -53,7 +53,7 @@ const personJsonLd = {
     { "@type": "EducationalOrganization", name: "ESIC Paris" },
   ],
   knowsAbout: ["Cybersécurité", "GRC", "Gestion des risques", "SOC", "Pentest", "DevSecOps", "ISO 27001", "EBIOS RM"],
-  knowsLanguage: ["fr", "en", "ar"],
+  knowsLanguage: ["fr", "en"],
   sameAs: [profile.linkedin, profile.github, profile.tryhackme],
 };
 

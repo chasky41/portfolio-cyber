@@ -58,7 +58,6 @@ export const profile = {
   languages: [
     { fr: "Français : bilingue", en: "French: bilingual" },
     { fr: "Anglais : courant (B2/C1)", en: "English: fluent (B2/C1)" },
-    { fr: "Arabe : langue maternelle", en: "Arabic: native" },
   ] as L[],
   about: {
     fr: [
