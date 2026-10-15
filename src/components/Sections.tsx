@@ -26,6 +26,7 @@ import { ui } from "@/data/ui";
 import { Badge, Section } from "./Section";
 import { Reveal } from "./Reveal";
 import { Tilt } from "./Tilt";
+import { GithubIcon } from "./Hero";
 
 const icons = { "shield-check": ShieldCheck, scale: Scale, radar: Radar, bug: Bug, "git-branch": GitBranch, factory: Factory };
 
@@ -192,6 +193,27 @@ export function Projects() {
   const { t } = useApp();
   return (
     <Section id="projects" title={t(ui.sections.projects)} eyebrow="projects/">
+      <Reveal>
+        <a
+          href={profile.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="glass glass-hover mb-6 flex flex-col items-start justify-between gap-3 border-accent/50 p-5 sm:flex-row sm:items-center"
+        >
+          <span className="flex items-center gap-4">
+            <span className="grid h-12 w-12 place-items-center rounded-xl bg-accent/15 text-accent-text">
+              <GithubIcon size={26} />
+            </span>
+            <span>
+              <span className="block text-lg font-semibold">{t(ui.labels.githubTitle)}</span>
+              <span className="block font-mono text-sm text-accent-text">github.com/chasky41</span>
+            </span>
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-fg">
+            {t(ui.labels.githubCta)} <ExternalLink size={14} aria-hidden="true" />
+          </span>
+        </a>
+      </Reveal>
       <div className="grid gap-5 md:grid-cols-2">
         {projects.map((p, i) => (
           <Reveal key={p.title.fr} delay={(i % 2) * 0.07} className="h-full">

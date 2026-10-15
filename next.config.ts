@@ -26,6 +26,17 @@ const nextConfig: NextConfig = {
       "*.css": { loaders: ["@tailwindcss/turbopack"], as: "*.css" },
     },
   },
+  async redirects() {
+    // Ancienne adresse (déjà diffusée, ex. QR code du CV) -> nouvelle adresse
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "portfolio-cyber-rosy.vercel.app" }],
+        destination: "https://charaf-eddine.vercel.app/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

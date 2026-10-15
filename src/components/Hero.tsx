@@ -5,12 +5,21 @@ import { useState } from "react";
 import { Download, Mail, Terminal as TerminalIcon } from "lucide-react";
 import { useApp } from "@/lib/app-context";
 import { certifications, counters, cvs, profile, thmStats } from "@/data/profile";
+import { siGithub } from "simple-icons";
 import { Tilt } from "./Tilt";
 import { readableColor, allTools } from "@/data/tools";
 import { ui } from "@/data/ui";
 import { Counter } from "./Counter";
 import { TypedRoles } from "./TypedRoles";
 import { Reveal } from "./Reveal";
+
+export function GithubIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
+      <path d={siGithub.path} />
+    </svg>
+  );
+}
 
 function LinkedInIcon() {
   return (
@@ -114,6 +123,15 @@ export function Hero() {
               <a href="#contact" className={secondary}>
                 <Mail size={16} aria-hidden="true" />
                 {t(ui.hero.contact)}
+              </a>
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-accent bg-accent/10 px-4 py-2.5 text-sm font-semibold text-accent-text shadow-[0_0_18px_-4px_var(--glow)] transition hover:bg-accent/20"
+              >
+                <GithubIcon />
+                GitHub
               </a>
               <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className={secondary}>
                 <LinkedInIcon />

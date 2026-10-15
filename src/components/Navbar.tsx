@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Download, Globe, Menu, Moon, ScanEye, Sun, X } from "lucide-react";
 import { useApp } from "@/lib/app-context";
 import { ui } from "@/data/ui";
-import { cvs, site } from "@/data/profile";
+import { cvs, profile, site } from "@/data/profile";
+import { GithubIcon } from "./Hero";
 
 const links = [
   ["about", ui.nav.about],
@@ -52,6 +53,16 @@ export function Navbar({ home = true }: { home?: boolean }) {
           <button type="button" className={btn} onClick={toggleTheme} aria-label={t(ui.theme)}>
             {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
           </button>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className={`${btn} !border-accent/60 text-accent-text`}
+          >
+            <GithubIcon size={18} />
+            <span className="max-md:hidden">GitHub</span>
+          </a>
           {home && (
             <button type="button" className={`${btn} max-sm:hidden whitespace-nowrap`} onClick={() => setRecruiter(true)}>
               <ScanEye size={16} aria-hidden="true" />

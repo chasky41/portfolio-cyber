@@ -53,6 +53,8 @@ export const ui = {
     qualities: { fr: "Qualités", en: "Qualities" },
     allSkills: { fr: "Toutes les compétences", en: "All skills" },
     logoNote: { fr: "Logos de marque : propriété de leurs détenteurs. Les badges texte (ANSSI, CERT-FR, Nmap, MITRE…) désignent des référentiels ou outils que je pratique, sans affiliation.", en: "Brand logos belong to their respective owners. Text badges (ANSSI, CERT-FR, Nmap, MITRE…) name frameworks or tools I use, with no affiliation." },
+    githubTitle: { fr: "Mon code et mes projets sont sur GitHub", en: "My code and projects are on GitHub" },
+    githubCta: { fr: "Voir mon GitHub", en: "View my GitHub" },
     noLink: { fr: "Lien bientôt disponible", en: "Link coming soon" },
     code: { fr: "Voir le projet", en: "View project" },
     thmTitle: { fr: "Pratique TryHackMe", en: "TryHackMe practice" },

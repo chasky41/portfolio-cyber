@@ -52,8 +52,11 @@ export function Contact() {
         body: data,
         headers: { Accept: "application/json" },
       });
-      if (res.ok) {
+      const json: { success?: string | boolean } | null = await res.json().catch(() => null);
+      const sent = res.ok && (FORMSPREE_ID ? true : json?.success === true || json?.success === "true");
+      if (sent) {
         setStatus("ok");
+        setMsg("");
         form.reset();
       } else {
         setStatus("err");
