@@ -16,7 +16,7 @@ export const ui = {
   skip: { fr: "Aller au contenu", en: "Skip to content" },
   theme: { fr: "Changer de thème", en: "Toggle theme" },
   lang: { fr: "Changer de langue", en: "Switch language" },
-  hero: { status: { fr: "System status : ONLINE · SOC ready", en: "System status: ONLINE · SOC ready" }, dashboard: { fr: "// tableau de bord opérateur", en: "// operator dashboard" }, certs: { fr: "certifications (obtenues + en cours)", en: "certifications (done + in progress)" }, rooms: { fr: "THM Rooms", en: "THM Rooms" }, greeting: { fr: "Bonjour, je suis", en: "Hi, I'm" }, contact: { fr: "Me contacter", en: "Contact me" }, cv: { fr: "Mon CV", en: "My CV" } },
+  hero: { open: { fr: "OPEN TO WORK", en: "OPEN TO WORK" }, online: { fr: "En ligne, connecté", en: "Online, connected" }, status: { fr: "System status : ONLINE · SOC ready", en: "System status: ONLINE · SOC ready" }, dashboard: { fr: "// tableau de bord opérateur", en: "// operator dashboard" }, certs: { fr: "certifications (obtenues + en cours)", en: "certifications (done + in progress)" }, rooms: { fr: "THM Rooms", en: "THM Rooms" }, greeting: { fr: "Bonjour, je suis", en: "Hi, I'm" }, contact: { fr: "Me contacter", en: "Contact me" }, cv: { fr: "Mon CV", en: "My CV" } },
   recruiter: {
     title: { fr: "Mode recruteur · 60 secondes", en: "Recruiter mode · 60 seconds" },
     target: { fr: "Poste visé", en: "Target position" },

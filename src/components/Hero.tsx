@@ -6,6 +6,7 @@ import { Download, Mail, Terminal as TerminalIcon } from "lucide-react";
 import { useApp } from "@/lib/app-context";
 import { certifications, counters, cvs, profile, thmStats } from "@/data/profile";
 import { Tilt } from "./Tilt";
+import { readableColor, allTools } from "@/data/tools";
 import { ui } from "@/data/ui";
 import { Counter } from "./Counter";
 import { TypedRoles } from "./TypedRoles";
@@ -19,6 +20,9 @@ function LinkedInIcon() {
   );
 }
 
+const orbitIds = ["kali", "burp", "python", "wireshark", "docker"];
+const orbitTools = orbitIds.map((id) => allTools.find((t) => t.id === id)).filter((t): t is (typeof allTools)[number] & { path: string } => !!t?.path);
+
 export function Hero() {
   const { t, lang } = useApp();
   const [imgOk, setImgOk] = useState(true);
@@ -30,25 +34,51 @@ export function Hero() {
       <div className="scanline" aria-hidden="true" />
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-12 sm:px-6 sm:pt-20 md:grid-cols-[auto_1fr] md:gap-14">
         <Reveal className="mx-auto">
-          <Tilt max={16}><div className="relative h-48 w-48 sm:h-60 sm:w-60" style={{ transform: "translateZ(40px)" }}>
-            <div className="ring absolute inset-0 rounded-full" aria-hidden="true" />
-            <div className="absolute inset-[5px] overflow-hidden rounded-full bg-elev">
-              {imgOk ? (
-                <Image
-                  src={profile.photo}
-                  alt={profile.name}
-                  fill
-                  priority
-                  unoptimized
-                  sizes="(min-width: 640px) 240px, 192px"
-                  className="object-cover"
-                  onError={() => setImgOk(false)}
-                />
-              ) : (
-                <div className="grid h-full w-full place-items-center font-mono text-5xl font-bold text-accent-text">CB</div>
-              )}
+          <Tilt max={12}>
+            <div className="relative mt-10 h-72 w-72 sm:h-80 sm:w-80" style={{ transform: "translateZ(40px)" }}>
+              <p className="open-pill" role="status">
+                <span className="led" aria-hidden="true" />
+                {t(ui.hero.open)}
+              </p>
+
+              {/* Orbite : anneau en pointillés + outils qui tournent autour de la photo */}
+              <div className="orbit-track" aria-hidden="true" />
+              <div className="orbit" aria-hidden="true">
+                {orbitTools.map((tool, i) => (
+                  <div key={tool.id} className="orbit-item" style={{ ["--a" as string]: `${(360 / orbitTools.length) * i + 20}deg` }}>
+                    <div className="orbit-pos" style={{ ["--a" as string]: `${(360 / orbitTools.length) * i + 20}deg` }}>
+                      <span className="orbit-icon" title={tool.label}>
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill={readableColor(tool.hex)}>
+                          <path d={tool.path} />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="absolute inset-[15%]">
+                <div className="ring absolute inset-0 rounded-full" aria-hidden="true" />
+                <div className="absolute inset-[4px] overflow-hidden rounded-full bg-elev">
+                  {imgOk ? (
+                    <Image
+                      src={profile.photo}
+                      alt={profile.name}
+                      fill
+                      priority
+                      unoptimized
+                      sizes="(min-width: 640px) 220px, 200px"
+                      className="object-cover"
+                      onError={() => setImgOk(false)}
+                    />
+                  ) : (
+                    <div className="grid h-full w-full place-items-center font-mono text-5xl font-bold text-accent-text">CB</div>
+                  )}
+                </div>
+                <span className="online-dot" role="img" aria-label={t(ui.hero.online)} title={t(ui.hero.online)} />
+              </div>
             </div>
-          </div></Tilt>
+          </Tilt>
         </Reveal>
 
         <div className="text-center md:text-left">

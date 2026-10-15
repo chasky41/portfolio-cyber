@@ -1,5 +1,5 @@
 Contact: mailto:berhili.charafeddine33@gmail.com
 Expires: 2027-10-01T00:00:00.000Z
 Preferred-Languages: fr, en
-Canonical: https://portfolio-cyber-rosy.vercel.app/.well-known/security.txt
-Policy: https://portfolio-cyber-rosy.vercel.app/securite
+Canonical: https://charaf-eddine.vercel.app/.well-known/security.txt
+Policy: https://charaf-eddine.vercel.app/securite

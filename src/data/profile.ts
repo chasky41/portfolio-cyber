@@ -18,7 +18,7 @@ export const levelLabels: Record<Level, L> = {
 };
 
 export const site = {
-  url: "https://portfolio-cyber-rosy.vercel.app", // TODO : remplacer par votre domaine final
+  url: "https://charaf-eddine.vercel.app", // TODO : remplacer par votre domaine final
   name: "Charaf-Eddine BERHILI",
   initials: "CB",
 };
@@ -550,8 +550,8 @@ export const securityPage = {
     {
       title: { fr: "Formulaire de contact", en: "Contact form" },
       text: {
-        fr: "Le formulaire envoie vos données uniquement à Formspree (seule origine externe autorisée par la CSP). Sans configuration, il se replie sur un lien mailto. Aucun secret n'est présent dans le code.",
-        en: "The form sends your data only to Formspree (the only external origin allowed by the CSP). Without configuration it falls back to a mailto link. No secret is present in the code.",
+        fr: "Le formulaire envoie votre message uniquement à FormSubmit ou Formspree (les seules origines externes autorisées par la CSP), en HTTPS. En cas d'échec, un lien mailto est proposé. Aucun secret n'est présent dans le code.",
+        en: "The form sends your message only to FormSubmit or Formspree (the only external origins allowed by the CSP), over HTTPS. If sending fails, a mailto link is offered. No secret is present in the code.",
       },
     },
     {

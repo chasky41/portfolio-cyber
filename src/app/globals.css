@@ -253,3 +253,46 @@ h1, h2, h3 { font-family: var(--font-space), var(--font-sans); }
   .loader-ring::before, .loader-bar span { animation: none; }
   .loader-bar span { width: 100%; }
 }
+
+/* ---- Photo : OPEN TO WORK + orbite d'outils + voyant « en ligne » ---- */
+.open-pill {
+  position: absolute; top: -26px; left: 50%; transform: translateX(-50%); z-index: 3;
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  padding: 7px 18px; border-radius: 9999px;
+  font-family: var(--font-jetbrains), monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
+  color: var(--fg);
+  background: var(--card); border: 1px solid var(--accent);
+  box-shadow: 0 0 18px var(--glow), inset 0 0 12px rgba(0, 243, 255, 0.12);
+  backdrop-filter: blur(10px);
+}
+.orbit-track {
+  position: absolute; inset: 4%; border-radius: 9999px;
+  border: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 0 24px -6px var(--glow), inset 0 0 24px -10px var(--glow);
+  animation: spin 60s linear infinite reverse;
+}
+.orbit { position: absolute; inset: 4%; animation: spin 40s linear infinite; }
+.orbit-item { position: absolute; inset: 0; transform: rotate(var(--a)); }
+.orbit-pos { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%) rotate(calc(-1 * var(--a))); }
+.orbit-icon {
+  display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9999px;
+  background: var(--bg-elev); border: 1px solid var(--accent);
+  box-shadow: 0 0 14px var(--glow);
+  animation: spin 40s linear infinite reverse;
+}
+.online-dot {
+  position: absolute; right: 4%; bottom: 4%; z-index: 2;
+  width: 34px; height: 34px; border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #7dffae, var(--green) 55%, #00b348);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 20px var(--green), 0 0 6px var(--green);
+}
+.online-dot::after {
+  content: ""; position: absolute; inset: -3px; border-radius: 9999px;
+  border: 2px solid var(--green); opacity: 0.6;
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes ping { 75%, 100% { transform: scale(1.9); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .orbit, .orbit-track, .orbit-icon, .online-dot::after { animation: none !important; }
+}

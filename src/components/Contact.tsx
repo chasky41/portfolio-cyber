@@ -10,6 +10,7 @@ import { Reveal } from "./Reveal";
 
 // ID Formspree facultatif (NEXT_PUBLIC_FORMSPREE_ID). Sans lui : repli sur mailto.
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+const endpoint = FORMSPREE_ID ? `https://formspree.io/f/${FORMSPREE_ID}` : `https://formsubmit.co/ajax/${profile.email}`;
 
 function toHex(v: string) {
   return Array.from(new TextEncoder().encode(v.slice(0, 120)))
@@ -24,6 +25,7 @@ export function Contact() {
   const { t } = useApp();
   const [copied, setCopied] = useState(false);
   const [msg, setMsg] = useState("");
+  const [fallback, setFallback] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
 
   async function copy() {
@@ -41,15 +43,11 @@ export function Contact() {
     const form = e.currentTarget;
     const data = new FormData(form);
     if (data.get("_gotcha")) return; // piège anti-bot
-    if (!FORMSPREE_ID) {
-      const subject = encodeURIComponent(`Portfolio · ${String(data.get("name") ?? "")}`);
-      const body = encodeURIComponent(`${String(data.get("message") ?? "")}\n\n${String(data.get("email") ?? "")}`);
-      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-      return;
-    }
+    data.set("_subject", `Portfolio · message de ${String(data.get("name") ?? "")}`);
+    data.set("_template", "table");
     setStatus("sending");
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const res = await fetch(endpoint, {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },
@@ -57,9 +55,13 @@ export function Contact() {
       if (res.ok) {
         setStatus("ok");
         form.reset();
-      } else setStatus("err");
+      } else {
+        setStatus("err");
+        setFallback(true);
+      }
     } catch {
       setStatus("err");
+      setFallback(true);
     }
   }
 
@@ -135,11 +137,16 @@ export function Contact() {
               disabled={status === "sending"}
               className="inline-flex w-full items-center justify-center rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-fg transition hover:brightness-110 disabled:opacity-60"
             >
-              {status === "sending" ? t(ui.contact.sending) : FORMSPREE_ID ? t(ui.contact.send) : t(ui.contact.mailto)}
+              {status === "sending" ? t(ui.contact.sending) : t(ui.contact.send)}
             </button>
             <p role="status" aria-live="polite" className="min-h-5 text-sm">
               {status === "ok" && <span className="text-green-text">{t(ui.contact.ok)}</span>}
               {status === "err" && <span className="text-[#ff8a80]">{t(ui.contact.err)}</span>}
+              {fallback && (
+                <a className="ml-2 underline" href={`mailto:${profile.email}`}>
+                  {t(ui.contact.mailto)}
+                </a>
+              )}
             </p>
           </form>
         </Reveal>
